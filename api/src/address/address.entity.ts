@@ -1,15 +1,22 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import { AddressType } from '../address-type/address-type.entity';
+import { AddressBook } from '../address-book/address-book.entity';
 
 @Entity()
+@Unique(
+  "unique_address_constraint",
+  ['streetLine1', 'streetLine2', 'city', 'state', 'postalCode', 'country']
+)
 export class Address {
+
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({length: 255})
-  street_line_1: string;
+  streetLine1: string;
 
   @Column({length: 255, nullable: true})
-  street_line_2: string;
+  streetLine2: string;
 
   @Column({length:100})
   city: string;
@@ -18,8 +25,15 @@ export class Address {
   state: string;
 
   @Column({length:25})
-  postal_code: string;
+  postalCode: string;
 
   @Column({length:75})
   country: string;
+
+  @ManyToOne(() => AddressType, (addressType) => addressType.addresses, {nullable: false})
+  addressType: AddressType;
+
+  @OneToMany(() => AddressBook, (addressBook) => addressBook.address)
+  addressBook: AddressBook[]
+
 }
