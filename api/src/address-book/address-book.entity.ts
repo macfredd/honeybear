@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Address } from '../address/address.entity';
 import { EntityType } from '../utils/enums';
 
@@ -19,5 +19,11 @@ export class AddressBook {
 
   @Column()
   entityId: number;
+
+  @CreateDateColumn()
+  createdDate: Date;
+
+  @UpdateDateColumn()
+  updatedDate: Date;
 
 }

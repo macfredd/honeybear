@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from 'typeorm';
 import { DocumentType } from '../document-type/document-type.entity';
 import { DocumentStatus, EntityType } from '../utils/enums';
 
@@ -33,4 +33,11 @@ export class Document {
     default: DocumentStatus.PENDING,
   })
   status: DocumentStatus;
+
+  @CreateDateColumn()
+  createdDate: Date;
+
+  @UpdateDateColumn()
+  updatedDate: Date;
+
 }

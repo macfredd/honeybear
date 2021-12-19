@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Vehicle } from '../vehicles/vehicle.entity';
 
 @Entity()
@@ -42,4 +42,11 @@ export class Driver {
 
   @OneToMany(() => Vehicle, (vehicle) => vehicle.driver)
   vehicles: Vehicle[];
+
+  @CreateDateColumn()
+  createdDate: Date;
+
+  @UpdateDateColumn()
+  updatedDate: Date;
+
 }

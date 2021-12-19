@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Document } from '../documents/document.entity';
 
 @Entity()
@@ -18,4 +18,11 @@ export class DocumentType {
 
   @OneToMany(() => Document, (document) => document.documentType)
   documents: Document[];
+
+  @CreateDateColumn()
+  createdDate: Date;
+
+  @UpdateDateColumn()
+  updatedDate: Date;
+
 }

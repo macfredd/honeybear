@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Driver } from '../drivers/driver.entity';
 import { VehicleType } from '../vehicle-type/vehicle-type.entity';
 
@@ -25,4 +25,11 @@ export class Vehicle {
 
   @ManyToOne(() => VehicleType, (vehicleType) => vehicleType.vehicles, {nullable: false})
   vehicleType: VehicleType;
+
+  @CreateDateColumn()
+  createdDate: Date;
+
+  @UpdateDateColumn()
+  updatedDate: Date;
+
 }
