@@ -1,6 +1,6 @@
 import { IsEnum, IsInt, IsUrl } from 'class-validator';
-import { EntityType } from '../document.entity';
 import { DocumentType } from '../../document-type/document-type.entity';
+import { EntityType } from '../../utils/enums';
 
 export class CreateDocumentDto {
 

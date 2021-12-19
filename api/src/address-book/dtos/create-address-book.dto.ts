@@ -1,6 +1,6 @@
 import { Address } from '../../address/address.entity';
 import { IsEnum, IsInt } from 'class-validator';
-import { EntityType } from '../../documents/document.entity';
+import { EntityType } from '../../utils/enums';
 
 export class CreateAddressBookDto {
 

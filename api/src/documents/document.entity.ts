@@ -1,18 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, Unique } from 'typeorm';
 import { DocumentType } from '../document-type/document-type.entity';
-
-export enum EntityType {
-  GROWER = "grower",
-  DRIVER = "driver",
-  CONSUMER = "consumer"
-}
-
-export enum DocumentStatus {
-  PENDING ="pending",
-  REVISION = "revision",
-  APPROVED = "approved",
-  REJECTED = "rejected",
-}
+import { DocumentStatus, EntityType } from '../utils/enums';
 
 @Entity()
 @Unique(
