@@ -1,6 +1,7 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Vehicle } from '../vehicles/vehicle.entity';
 import { Job } from '../jobs/job.entity';
+import { JobCandidate } from '../job-candidate/job-candidate.entity';
 
 @Entity()
 export class Driver {
@@ -46,6 +47,9 @@ export class Driver {
 
   @OneToMany(() => Job, (job) => job.grower)
   jobs: Job[];
+
+  @OneToMany(() => JobCandidate, (jobCandidate) => jobCandidate.job)
+  jobCandidate: JobCandidate[];
 
   @CreateDateColumn({name: "created_date"})
   createdDate: Date;

@@ -12,6 +12,7 @@ import { AddressBookModule } from './address-book/address-book.module';
 import { AddressTypeModule } from './address-type/address-type.module';
 import { JobsModule } from './jobs/jobs.module';
 import { JobDetailModule } from './job-detail/job-detail.module';
+import { JobCandidateModule } from './job-candidate/job-candidate.module';
 
 @Module({
   imports: [
@@ -27,7 +28,8 @@ import { JobDetailModule } from './job-detail/job-detail.module';
     AddressBookModule,
     AddressTypeModule,
     JobsModule,
-    JobDetailModule
+    JobDetailModule,
+    JobCandidateModule
   ],
   controllers: [],
   providers: [],

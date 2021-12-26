@@ -11,6 +11,7 @@ import { Grower } from '../growers/grower.entity';
 import { JobStatus } from '../utils/enums';
 import { Driver } from '../drivers/driver.entity';
 import { JobDetail } from '../job-detail/job-detail.entity';
+import { JobCandidate } from '../job-candidate/job-candidate.entity';
 
 @Entity()
 export class Job {
@@ -46,6 +47,9 @@ export class Job {
 
   @OneToMany(() => JobDetail, (jobDetail) => jobDetail.job,{ cascade: true})
   jobDetail: JobDetail[];
+
+  @OneToMany(() => JobCandidate, (jobCandidate) => jobCandidate.job,{ cascade: true})
+  jobCandidate: JobCandidate[];
 
   @CreateDateColumn({name: "created_date"})
   createdDate: Date;

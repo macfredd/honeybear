@@ -3,12 +3,13 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
-  ManyToOne,
+  ManyToOne, OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { Driver } from '../drivers/driver.entity';
 import { VehicleType } from '../vehicle-type/vehicle-type.entity';
+import { JobCandidate } from '../job-candidate/job-candidate.entity';
 
 @Entity()
 export class Vehicle {
@@ -35,6 +36,9 @@ export class Vehicle {
   @ManyToOne(() => VehicleType, (vehicleType) => vehicleType.vehicles, {nullable: false})
   @JoinColumn({name: 'vehicle_type_id'})
   vehicleType: VehicleType;
+
+  @OneToMany(() => JobCandidate, (jobCandidate) => jobCandidate.vehicle)
+  jobCandidate: JobCandidate[];
 
   @CreateDateColumn({name: "created_date"})
   createdDate: Date;
