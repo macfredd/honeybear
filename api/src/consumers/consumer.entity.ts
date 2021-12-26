@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { JobDetail } from '../job-detail/job-detail.entity';
 
 @Entity()
 export class Consumer {
@@ -6,10 +7,10 @@ export class Consumer {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({length: 125})
+  @Column({length: 125, name: 'first_name'})
   firstName: string;
 
-  @Column({length: 125, nullable: true})
+  @Column({length: 125, nullable: true, name: 'last_name'})
   lastName: string;
 
   @Column({length: 125})
@@ -18,19 +19,22 @@ export class Consumer {
   @Column({length: 50})
   phone: string;
 
-  @Column({length: 150, unique: true})
+  @Column({length: 150, unique: true, name: 'license_no'})
   licenseNo: string;
 
-  @Column({type: 'date'})
+  @Column({type: 'date', name: 'license_expiry'})
   licenseExpiry: Date;
 
-  @Column({length: 100})
+  @Column({length: 100, name: 'state_issued'})
   stateIssued: string;
 
-  @CreateDateColumn()
+  @OneToMany(() => JobDetail, (jobDetail) => jobDetail.job)
+  jobDetail: JobDetail;
+
+  @CreateDateColumn({name: "created_date"})
   createdDate: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({name: "updated_date"})
   updatedDate: Date;
 
 }

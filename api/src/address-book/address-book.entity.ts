@@ -1,4 +1,12 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { Address } from '../address/address.entity';
 import { EntityType } from '../utils/enums';
 
@@ -11,19 +19,21 @@ export class AddressBook {
   @Column({
     type: 'enum',
     enum: EntityType,
+    name: 'entity_type'
   })
   entityType: EntityType;
 
   @ManyToOne(() => Address, (address) => address.addressBook, {nullable: false})
+  @JoinColumn({name: "address_id"})
   address: Address;
 
-  @Column()
+  @Column({name: 'entity_id'})
   entityId: number;
 
-  @CreateDateColumn()
+  @CreateDateColumn({name: "created_date"})
   createdDate: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({name: "updated_date"})
   updatedDate: Date;
 
 }

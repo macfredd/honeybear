@@ -1,7 +1,7 @@
 import {
   Column,
   CreateDateColumn,
-  Entity,
+  Entity, JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { AddressType } from '../address-type/address-type.entity';
 import { AddressBook } from '../address-book/address-book.entity';
+import { JobDetail } from '../job-detail/job-detail.entity';
 
 @Entity()
 @Unique(
@@ -21,10 +22,10 @@ export class Address {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({length: 255})
+  @Column({length: 255, name: "street_line_1" })
   streetLine1: string;
 
-  @Column({length: 255, nullable: true})
+  @Column({length: 255, nullable: true, name: "street_line_2"})
   streetLine2: string;
 
   @Column({length:100})
@@ -33,22 +34,26 @@ export class Address {
   @Column({length:100})
   state: string;
 
-  @Column({length:25})
+  @Column({length:25, name: "postal_code"})
   postalCode: string;
 
   @Column({length:75})
   country: string;
 
-  @ManyToOne(() => AddressType, (addressType) => addressType.addresses, {nullable: false})
+  @ManyToOne(() => AddressType, (addressType) => addressType.addresses, { nullable: false })
+  @JoinColumn({name: "address_type_id"})
   addressType: AddressType;
 
   @OneToMany(() => AddressBook, (addressBook) => addressBook.address)
-  addressBook: AddressBook[]
+  addressBook: AddressBook[];
 
-  @CreateDateColumn()
+  @OneToMany(() => JobDetail, (jobDetail) => jobDetail.deliveryAddress)
+  jobDetails: JobDetail[];
+
+  @CreateDateColumn({name: "created_date"})
   createdDate: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({name: "updated_date"})
   updatedDate: Date;
 
 }

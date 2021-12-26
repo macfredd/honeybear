@@ -13,16 +13,17 @@ export class DocumentType {
   @Column({
     type: 'boolean',
     default: false,
+    name: 'required_validation'
   })
-  requiredAuth: boolean;
+  requiredValidation: boolean;
 
   @OneToMany(() => Document, (document) => document.documentType)
   documents: Document[];
 
-  @CreateDateColumn()
+  @CreateDateColumn({name: "created_date"})
   createdDate: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({name: "updated_date"})
   updatedDate: Date;
 
 }

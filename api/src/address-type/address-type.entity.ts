@@ -10,13 +10,16 @@ export class AddressType {
   @Column({length: 125, unique:true})
   type: string;
 
+  @Column({length: 2, unique: true})
+  code: string;
+
   @OneToMany(() => Address, (address) => address.addressType)
   addresses: Address[];
 
-  @CreateDateColumn()
+  @CreateDateColumn({name: "created_date"})
   createdDate: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({name: "updated_date"})
   updatedDate: Date;
 
 }

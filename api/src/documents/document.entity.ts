@@ -1,4 +1,13 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  Unique,
+  UpdateDateColumn,
+} from 'typeorm';
 import { DocumentType } from '../document-type/document-type.entity';
 import { DocumentStatus, EntityType } from '../utils/enums';
 
@@ -13,15 +22,17 @@ export class Document {
   id: number;
 
   @ManyToOne(() => DocumentType, (documentType) => documentType.documents, {nullable: false})
+  @JoinColumn({name: 'document_type_id'})
   documentType: DocumentType;
 
   @Column({
     type: 'enum',
     enum: EntityType,
+    name: 'entity_type'
   })
   entityType: EntityType;
 
-  @Column()
+  @Column({name: 'owner_id'})
   ownerId: number;
 
   @Column()
@@ -34,10 +45,10 @@ export class Document {
   })
   status: DocumentStatus;
 
-  @CreateDateColumn()
+  @CreateDateColumn({name: "created_date"})
   createdDate: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({name: "updated_date"})
   updatedDate: Date;
 
 }
