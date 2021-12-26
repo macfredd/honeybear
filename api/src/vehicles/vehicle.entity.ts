@@ -1,4 +1,12 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { Driver } from '../drivers/driver.entity';
 import { VehicleType } from '../vehicle-type/vehicle-type.entity';
 
@@ -21,15 +29,17 @@ export class Vehicle {
   vim: string;
 
   @ManyToOne(() => Driver, (driver) => driver.vehicles, {nullable: false})
+  @JoinColumn({name: 'driver_id'})
   driver: Driver;
 
   @ManyToOne(() => VehicleType, (vehicleType) => vehicleType.vehicles, {nullable: false})
+  @JoinColumn({name: 'vehicle_type_id'})
   vehicleType: VehicleType;
 
-  @CreateDateColumn()
+  @CreateDateColumn({name: "created_date"})
   createdDate: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({name: "updated_date"})
   updatedDate: Date;
 
 }

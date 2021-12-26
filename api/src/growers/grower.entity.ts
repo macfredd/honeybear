@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Job } from '../jobs/job.entity';
 
 @Entity()
 export class Grower {
@@ -9,13 +10,13 @@ export class Grower {
   @Column({length: 255})
   name: string;
 
-  @Column({length: 255, nullable: true})
+  @Column({length: 255, nullable: true, name: 'trade_name'})
   tradeName: string;
 
-  @Column({length: 100, unique: true})
+  @Column({length: 100, unique: true, name: 'license_no'})
   licenseNo: string;
 
-  @Column({type: 'date'})
+  @Column({type: 'date', name: 'license_expiry'})
   licenseExpiry: Date;
 
   @Column({length: 255, unique: true})
@@ -25,13 +26,16 @@ export class Grower {
   phone: string;
 
   // Growers are initially created without an account.
-  @Column({nullable: true})
+  @Column({nullable: true, name: 'account_id'})
   accountId: number;
 
-  @CreateDateColumn()
+  @OneToMany(() => Job, (job) => job.grower)
+  jobs: Job[];
+
+  @CreateDateColumn({name: "created_date"})
   createdDate: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({name: "updated_date"})
   updatedDate: Date;
 
 }

@@ -13,10 +13,10 @@ export class VehicleType {
   @OneToMany(() => Vehicle, (vehicle) => vehicle.vehicleType)
   vehicles: Vehicle[];
 
-  @CreateDateColumn()
+  @CreateDateColumn({name: "created_date"})
   createdDate: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({name: "updated_date"})
   updatedDate: Date;
 
 }

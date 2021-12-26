@@ -10,6 +10,8 @@ import { VehiclesModule } from './vehicles/vehicles.module';
 import { VehicleTypeModule } from './vehicle-type/vehicle-type.module';
 import { AddressBookModule } from './address-book/address-book.module';
 import { AddressTypeModule } from './address-type/address-type.module';
+import { JobsModule } from './jobs/jobs.module';
+import { JobDetailModule } from './job-detail/job-detail.module';
 
 @Module({
   imports: [
@@ -23,7 +25,9 @@ import { AddressTypeModule } from './address-type/address-type.module';
     VehiclesModule,
     VehicleTypeModule,
     AddressBookModule,
-    AddressTypeModule
+    AddressTypeModule,
+    JobsModule,
+    JobDetailModule
   ],
   controllers: [],
   providers: [],
