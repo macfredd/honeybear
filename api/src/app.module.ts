@@ -13,6 +13,7 @@ import { AddressTypeModule } from './address-type/address-type.module';
 import { JobsModule } from './jobs/jobs.module';
 import { JobDetailModule } from './job-detail/job-detail.module';
 import { JobCandidateModule } from './job-candidate/job-candidate.module';
+import { LocationsModule } from './locations/locations.module';
 
 @Module({
   imports: [
@@ -29,7 +30,8 @@ import { JobCandidateModule } from './job-candidate/job-candidate.module';
     AddressTypeModule,
     JobsModule,
     JobDetailModule,
-    JobCandidateModule
+    JobCandidateModule,
+    LocationsModule
   ],
   controllers: [],
   providers: [],
