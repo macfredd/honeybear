@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ConsumersService } from './consumers.service';
-import { CreateConsumerDto } from './dtos/create-consumer-dto';
+import { CreateConsumerDto } from './dtos/create-consumer.dto';
 
 @Controller('consumers')
 export class ConsumersController {
