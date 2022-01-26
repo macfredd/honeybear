@@ -12,4 +12,9 @@ export class DriversService {
     const driver = this.repo.create(driverDto);
     return this.repo.save(driver);
   }
+
+  findOne(driver_id: number) {
+    return this.repo.findOne(driver_id);
+  }
+
 }

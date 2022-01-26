@@ -1,4 +1,5 @@
 import {
+  Column,
   CreateDateColumn,
   Entity,
   JoinColumn,
@@ -20,17 +21,26 @@ export class JobCandidate {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Job, (job) => job.jobCandidate, {nullable: false})
+  @ManyToOne(() => Job, (job) => job.jobCandidate, {
+    nullable: false,
+    eager: true
+  })
   @JoinColumn({name: 'job_id'})
   job: Job;
 
-  @ManyToOne(() => Driver, (driver) => driver.jobCandidate, {nullable: false})
+  @ManyToOne(() => Driver, (driver) => driver.jobCandidate, {
+    nullable: false,
+    eager: true
+  })
   @JoinColumn({name: 'driver_id'})
   driver: Driver;
 
   @ManyToOne(() => Vehicle, (vehicle) => vehicle.jobCandidate, {nullable: false})
   @JoinColumn({name: 'vehicle_id'})
   vehicle: Vehicle;
+
+  @Column({type: 'boolean', default: false})
+  selected: boolean;
 
   @CreateDateColumn({name: "created_date"})
   createdDate: Date;

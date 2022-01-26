@@ -20,8 +20,16 @@ export enum JobStatus {
   CANCELED    = "canceled",
 }
 
-export enum PayMentStatus {
+export enum JobDetailStatus {
   COLLECT     = "collect",
+  BILLED      = "billed",
   PAID        = "paid",
+  VOID        = "void"
+}
+
+export enum InvoiceStatus {
+  PENDING     = "pending",
+  PAID        = "paid",
+  VOID        = "void",
 }
 

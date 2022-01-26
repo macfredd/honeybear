@@ -14,6 +14,8 @@ import { JobsModule } from './jobs/jobs.module';
 import { JobDetailModule } from './job-detail/job-detail.module';
 import { JobCandidateModule } from './job-candidate/job-candidate.module';
 import { LocationsModule } from './locations/locations.module';
+import { InvoicesModule } from './invoices/invoices.module';
+import { InvoiceDetailModule } from './invoice-detail/invoice-detail.module';
 
 @Module({
   imports: [
@@ -31,7 +33,9 @@ import { LocationsModule } from './locations/locations.module';
     JobsModule,
     JobDetailModule,
     JobCandidateModule,
-    LocationsModule
+    LocationsModule,
+    InvoicesModule,
+    InvoiceDetailModule
   ],
   controllers: [],
   providers: [],

@@ -1,8 +1,9 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Job } from '../jobs/job.entity';
 import { Consumer } from '../consumers/consumer.entity';
-import { PayMentStatus } from '../utils/enums';
+import { JobDetailStatus } from '../utils/enums';
 import { Address } from '../address/address.entity';
+import { InvoiceDetail } from '../invoice-detail/invoice-detail.entity';
 
 @Entity()
 export class JobDetail {
@@ -35,13 +36,16 @@ export class JobDetail {
 
   @Column({
     type: 'enum',
-    enum: PayMentStatus,
-    default: PayMentStatus.COLLECT,
+    enum: JobDetailStatus,
+    default: JobDetailStatus.COLLECT,
   })
-  status: PayMentStatus;
+  status: JobDetailStatus;
 
   @ManyToOne(() => Address, (address) => address.jobDetails, { nullable: false })
   @JoinColumn({name: 'delivery_address_id'})
   deliveryAddress: Address;
+
+  @OneToOne(() => InvoiceDetail, (invoiceDetail) => invoiceDetail.jobDetail)
+  invoiceDetail: InvoiceDetail;
 
 }

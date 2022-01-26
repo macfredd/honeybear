@@ -33,10 +33,16 @@ export class Job {
   @Column({length: 500, nullable: true})
   description: string;
 
-  @Column({type: 'date', nullable: true, name: 'start_date'})
+  @Column({type: 'timestamp', nullable: true, name: 'published_date'})
+  publishDate: Date;
+
+  @Column({type: 'timestamp', nullable: true, name: 'assigned_date'})
+  assignedDate: Date;
+
+  @Column({type: 'timestamp', nullable: true, name: 'start_date'})
   startDate: Date;
 
-  @Column({type: 'date', nullable: true, name: 'end_date'})
+  @Column({type: 'timestamp', nullable: true, name: 'end_date'})
   endDate: Date;
 
   @Column({
@@ -46,7 +52,7 @@ export class Job {
   })
   status: JobStatus;
 
-  @OneToMany(() => JobDetail, (jobDetail) => jobDetail.job,{ cascade: true})
+  @OneToMany(() => JobDetail, (jobDetail) => jobDetail.job,{ cascade: true, eager:  true})
   jobDetail: JobDetail[];
 
   @OneToMany(() => JobCandidate, (jobCandidate) => jobCandidate.job,{ cascade: true})

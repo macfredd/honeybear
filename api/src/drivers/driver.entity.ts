@@ -3,6 +3,7 @@ import { Vehicle } from '../vehicles/vehicle.entity';
 import { Job } from '../jobs/job.entity';
 import { JobCandidate } from '../job-candidate/job-candidate.entity';
 import { Location } from '../locations/location.entity';
+import { Invoice } from '../invoices/invoice.entity';
 
 @Entity()
 export class Driver {
@@ -54,6 +55,9 @@ export class Driver {
 
   @OneToMany(() => Location, (location) => location.driver,{ cascade: true})
   locations: Location[];
+
+  @OneToMany(() => Invoice, (invoice) => invoice.driver,{ cascade: true})
+  invoices: Invoice[];
 
   @CreateDateColumn({name: "created_date"})
   createdDate: Date;

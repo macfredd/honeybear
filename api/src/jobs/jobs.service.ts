@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Job } from './job.entity';
 import { CreateJobDto } from './dtos/create-job.dto';
 import { JobDetail } from '../job-detail/job-detail.entity';
-import { AddressBookService } from '../address-book/address-book.service';
+import { JobStatus, JobDetailStatus } from '../utils/enums';
+import { Driver } from '../drivers/driver.entity';
 
 @Injectable()
 export class JobsService {
@@ -13,30 +14,98 @@ export class JobsService {
   async create(createJobDto: CreateJobDto) {
 
     const job = this.repo.create(createJobDto);
-    job.jobDetail = [];
+    job.jobDetail = createJobDto.detail as Partial<JobDetail[]>;
 
-    for (let detail of createJobDto.detail) {
-      let jobdetail = new JobDetail();
-      jobdetail.consumer = detail.consumer;
-      jobdetail.description = detail.description;
-      jobdetail.packageAmount = detail.packageAmount;
-      jobdetail.deliveryAmount = detail.deliveryAmount;
-      jobdetail.taxAmount = detail.taxAmount;
-      jobdetail.totalAmount = jobdetail.packageAmount
-        + jobdetail.deliveryAmount
-        + jobdetail.taxAmount;
+    Object.values(job.jobDetail).forEach((detail) => {
+        detail.totalAmount = detail.packageAmount
+          + detail.deliveryAmount
+          + detail.taxAmount;
 
-
-      if ('deliveryAddress' in detail) {
-        //const address = await this.addressBookService.findBy .findOne(detail.deliveryAddress)
-        //console.log(address)
-      }
-
-      jobdetail.deliveryAddress = detail.deliveryAddress;
-
-      job.jobDetail.push(jobdetail);
-    }
+        if ('deliveryAddress' in detail) {
+          //const address = await this.addressBookService.findBy .findOne(detail.deliveryAddress)
+          //detail.deliveryAddress = detail.deliveryAddress;
+        }
+    });
 
     return this.repo.save(job);
+  }
+
+  findOne(jobId: number) {
+    return this.repo.findOne(jobId);
+  }
+
+  async publishJob(jobId: number) {
+    const job = await this.repo.findOne(jobId);
+
+    if (job == undefined)
+      throw new BadRequestException("Job does not exists!")
+
+    if (job.status != JobStatus.CREATED)
+      throw  new BadRequestException("Incorrect Job Status: ["
+        + job.status + "], Expected [created]");
+
+
+    job.publishDate = new Date();
+    job.status = JobStatus.PUBLISHED;
+
+    await this.repo.save(job);
+  }
+
+  async assignJob (job: Job, driver: Driver) {
+    job.status = JobStatus.ASSIGNED;
+    job.assignedDate = new Date();
+    job.driver = driver;
+
+    return await this.repo.save(job);
+  }
+
+  async startJob (jobId: number) {
+    const job = await this.repo.findOne(jobId)
+
+    if (job == undefined)
+      throw new BadRequestException("Job does not exists!")
+
+    if (job.status != JobStatus.ASSIGNED)
+      throw  new BadRequestException("Incorrect Job Status: ["
+        + job.status + "], Expected [assigned]");
+
+    //TODO: Validate that only the assigned driver or an admin role can start a job.
+    job.status = JobStatus.IN_PROGRESS;
+    job.startDate = new Date();
+
+    return await this.repo.save(job);
+  }
+
+  async completeJob (jobId: number) {
+    const job = await this.repo.findOne(jobId)
+
+    if (job == undefined)
+      throw new BadRequestException("Job does not exists!")
+
+    if (job.status != JobStatus.IN_PROGRESS)
+      throw  new BadRequestException("Incorrect Job Status: ["
+        + job.status + "], Expected [in progress]");
+
+    //TODO: Validate that only the assigned driver or an admin role can complete a job.
+    job.status = JobStatus.COMPLETED;
+    job.endDate = new Date();
+
+    return await this.repo.save(job);
+  }
+
+  async getDriverDetailForBilling (jobId: number, driverId: number) {
+    return await this.repo.createQueryBuilder("job")
+      .innerJoinAndSelect("job.jobDetail", "jobDetail")
+      .where("job.id = :jobId and job.driver_id = :driverId")
+      .andWhere("job.status = :jobStatus")
+      .andWhere("jobDetail.status = :paymentStatus")
+      .setParameters(
+        {
+          jobId: jobId,
+          driverId: driverId,
+          jobStatus: JobStatus.COMPLETED,
+          paymentStatus: JobDetailStatus.COLLECT
+        })
+      .getRawMany();
   }
 }
