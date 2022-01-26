@@ -16,6 +16,7 @@ import { JobCandidateModule } from './job-candidate/job-candidate.module';
 import { LocationsModule } from './locations/locations.module';
 import { InvoicesModule } from './invoices/invoices.module';
 import { InvoiceDetailModule } from './invoice-detail/invoice-detail.module';
+import { AccountsModule } from './accounts/accounts.module';
 
 @Module({
   imports: [
@@ -35,7 +36,8 @@ import { InvoiceDetailModule } from './invoice-detail/invoice-detail.module';
     JobCandidateModule,
     LocationsModule,
     InvoicesModule,
-    InvoiceDetailModule
+    InvoiceDetailModule,
+    AccountsModule
   ],
   controllers: [],
   providers: [],

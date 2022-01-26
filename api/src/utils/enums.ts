@@ -33,3 +33,9 @@ export enum InvoiceStatus {
   VOID        = "void",
 }
 
+export enum AccountStatus {
+  PENDING     = "pending",
+  APPROVED    = "approved",
+  SUSPENDED   = "suspended",
+  ACTIVE      = "active",
+}
