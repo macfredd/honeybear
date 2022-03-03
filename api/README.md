@@ -81,3 +81,12 @@ createdb -U postgres -E UNICODE -O honeybear honeybear
 
 Password: honeybear
 ```
+
+### For Auth (Passport-local plus JWT)
+
+```
+npm install --save @nestjs/passport passport passport-local
+npm install --save-dev @types/passport-local
+npm install --save @nestjs/jwt passport-jwt
+npm install --save-dev @types/passport-jwt
+```

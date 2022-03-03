@@ -9,7 +9,7 @@ export class AccountsController {
 
   @Post()
   createAccount(@Body() body: CreateAccountDto) {
-    const account = this.accountService.create(body);
+    const account = this.accountService.signUp(body);
     return account;
   }
 }

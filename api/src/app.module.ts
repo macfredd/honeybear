@@ -17,6 +17,7 @@ import { LocationsModule } from './locations/locations.module';
 import { InvoicesModule } from './invoices/invoices.module';
 import { InvoiceDetailModule } from './invoice-detail/invoice-detail.module';
 import { AccountsModule } from './accounts/accounts.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -37,7 +38,8 @@ import { AccountsModule } from './accounts/accounts.module';
     LocationsModule,
     InvoicesModule,
     InvoiceDetailModule,
-    AccountsModule
+    AccountsModule,
+    AuthModule
   ],
   controllers: [],
   providers: [],
