@@ -9,22 +9,20 @@ import { Driver } from '../drivers/driver.entity';
 
 @Injectable()
 export class JobsService {
-  constructor(@InjectRepository(Job) private repo:Repository<Job>) {}
+  constructor(@InjectRepository(Job) private repo: Repository<Job>) {}
 
   async create(createJobDto: CreateJobDto) {
-
     const job = this.repo.create(createJobDto);
     job.jobDetail = createJobDto.detail as Partial<JobDetail[]>;
 
     Object.values(job.jobDetail).forEach((detail) => {
-        detail.totalAmount = detail.packageAmount
-          + detail.deliveryAmount
-          + detail.taxAmount;
+      detail.totalAmount =
+        detail.packageAmount + detail.deliveryAmount + detail.taxAmount;
 
-        if ('deliveryAddress' in detail) {
-          //const address = await this.addressBookService.findBy .findOne(detail.deliveryAddress)
-          //detail.deliveryAddress = detail.deliveryAddress;
-        }
+      if ('deliveryAddress' in detail) {
+        //const address = await this.addressBookService.findBy .findOne(detail.deliveryAddress)
+        //detail.deliveryAddress = detail.deliveryAddress;
+      }
     });
 
     return this.repo.save(job);
@@ -37,13 +35,12 @@ export class JobsService {
   async publishJob(jobId: number) {
     const job = await this.repo.findOne(jobId);
 
-    if (job == undefined)
-      throw new BadRequestException("Job does not exists!")
+    if (job == undefined) throw new BadRequestException('Job does not exists!');
 
     if (job.status != JobStatus.CREATED)
-      throw  new BadRequestException("Incorrect Job Status: ["
-        + job.status + "], Expected [created]");
-
+      throw new BadRequestException(
+        'Incorrect Job Status: [' + job.status + '], Expected [created]',
+      );
 
     job.publishDate = new Date();
     job.status = JobStatus.PUBLISHED;
@@ -51,7 +48,7 @@ export class JobsService {
     await this.repo.save(job);
   }
 
-  async assignJob (job: Job, driver: Driver) {
+  async assignJob(job: Job, driver: Driver) {
     job.status = JobStatus.ASSIGNED;
     job.assignedDate = new Date();
     job.driver = driver;
@@ -59,15 +56,15 @@ export class JobsService {
     return await this.repo.save(job);
   }
 
-  async startJob (jobId: number) {
-    const job = await this.repo.findOne(jobId)
+  async startJob(jobId: number) {
+    const job = await this.repo.findOne(jobId);
 
-    if (job == undefined)
-      throw new BadRequestException("Job does not exists!")
+    if (job == undefined) throw new BadRequestException('Job does not exists!');
 
     if (job.status != JobStatus.ASSIGNED)
-      throw  new BadRequestException("Incorrect Job Status: ["
-        + job.status + "], Expected [assigned]");
+      throw new BadRequestException(
+        'Incorrect Job Status: [' + job.status + '], Expected [assigned]',
+      );
 
     //TODO: Validate that only the assigned driver or an admin role can start a job.
     job.status = JobStatus.IN_PROGRESS;
@@ -76,15 +73,15 @@ export class JobsService {
     return await this.repo.save(job);
   }
 
-  async completeJob (jobId: number) {
-    const job = await this.repo.findOne(jobId)
+  async completeJob(jobId: number) {
+    const job = await this.repo.findOne(jobId);
 
-    if (job == undefined)
-      throw new BadRequestException("Job does not exists!")
+    if (job == undefined) throw new BadRequestException('Job does not exists!');
 
     if (job.status != JobStatus.IN_PROGRESS)
-      throw  new BadRequestException("Incorrect Job Status: ["
-        + job.status + "], Expected [in progress]");
+      throw new BadRequestException(
+        'Incorrect Job Status: [' + job.status + '], Expected [in progress]',
+      );
 
     //TODO: Validate that only the assigned driver or an admin role can complete a job.
     job.status = JobStatus.COMPLETED;
@@ -93,19 +90,19 @@ export class JobsService {
     return await this.repo.save(job);
   }
 
-  async getDriverDetailForBilling (jobId: number, driverId: number) {
-    return await this.repo.createQueryBuilder("job")
-      .innerJoinAndSelect("job.jobDetail", "jobDetail")
-      .where("job.id = :jobId and job.driver_id = :driverId")
-      .andWhere("job.status = :jobStatus")
-      .andWhere("jobDetail.status = :paymentStatus")
-      .setParameters(
-        {
-          jobId: jobId,
-          driverId: driverId,
-          jobStatus: JobStatus.COMPLETED,
-          paymentStatus: JobDetailStatus.COLLECT
-        })
+  async getDriverDetailForBilling(jobId: number, driverId: number) {
+    return await this.repo
+      .createQueryBuilder('job')
+      .innerJoinAndSelect('job.jobDetail', 'jobDetail')
+      .where('job.id = :jobId and job.driver_id = :driverId')
+      .andWhere('job.status = :jobStatus')
+      .andWhere('jobDetail.status = :paymentStatus')
+      .setParameters({
+        jobId: jobId,
+        driverId: driverId,
+        jobStatus: JobStatus.COMPLETED,
+        paymentStatus: JobDetailStatus.COLLECT,
+      })
       .getRawMany();
   }
 }

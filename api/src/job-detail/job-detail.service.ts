@@ -6,18 +6,20 @@ import { JobDetailStatus } from '../utils/enums';
 
 @Injectable()
 export class JobDetailService {
-
-  constructor(@InjectRepository(JobDetail) private repo:Repository<JobDetail>) {}
+  constructor(
+    @InjectRepository(JobDetail) private repo: Repository<JobDetail>,
+  ) {}
 
   async findOne(jobDetailId: number) {
     return await this.repo.findOne(jobDetailId);
   }
 
   async changeStatusToBilled(jobId: number) {
-    await this.repo.createQueryBuilder()
+    await this.repo
+      .createQueryBuilder()
       .update(JobDetail)
-      .set({status: JobDetailStatus.BILLED})
-      .where('job_id = :jobId', {jobId: jobId})
+      .set({ status: JobDetailStatus.BILLED })
+      .where('job_id = :jobId', { jobId: jobId })
       .execute();
   }
 }

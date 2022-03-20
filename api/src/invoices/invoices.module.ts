@@ -12,9 +12,9 @@ import { JobDetailModule } from '../job-detail/job-detail.module';
     TypeOrmModule.forFeature([Invoice]),
     DriversModule,
     JobsModule,
-    JobDetailModule
+    JobDetailModule,
   ],
   providers: [InvoicesService],
-  controllers: [InvoicesController]
+  controllers: [InvoicesController],
 })
 export class InvoicesModule {}

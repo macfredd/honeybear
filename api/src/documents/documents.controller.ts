@@ -4,7 +4,6 @@ import { CreateDocumentDto } from './dtos/create-document.dto';
 
 @Controller('documents')
 export class DocumentsController {
-
   constructor(private documentsService: DocumentsService) {}
 
   @Post()

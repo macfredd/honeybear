@@ -4,7 +4,6 @@ import { CreateAddressBookDto } from './dtos/create-address-book.dto';
 
 @Controller('address-book')
 export class AddressBookController {
-
   constructor(private addressBookService: AddressBookService) {}
 
   @Post()

@@ -7,6 +7,6 @@ import { AddressBook } from './address-book.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([AddressBook])],
   controllers: [AddressBookController],
-  providers: [AddressBookService]
+  providers: [AddressBookService],
 })
 export class AddressBookModule {}

@@ -4,20 +4,19 @@ import { thanZero } from '../../utils/constants';
 import { Address } from '../../address/address.entity';
 
 export class CreateJobDetailDto {
-
   @IsInt()
   consumer: Consumer;
 
   @IsNumber()
-  @Min(0, {message: thanZero})
+  @Min(0, { message: thanZero })
   packageAmount: number;
 
   @IsNumber()
-  @Min(0, {message: thanZero})
+  @Min(0, { message: thanZero })
   deliveryAmount: number;
 
   @IsNumber()
-  @Min(0, {message: thanZero})
+  @Min(0, { message: thanZero })
   taxAmount: number;
 
   @IsOptional()
@@ -27,5 +26,4 @@ export class CreateJobDetailDto {
   @IsOptional()
   @IsInt()
   deliveryAddress: Address;
-
 }

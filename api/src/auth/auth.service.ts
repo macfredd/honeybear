@@ -4,11 +4,9 @@ import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-
   constructor(
     private accountService: AccountsService,
-    private jwtService: JwtService
-
+    private jwtService: JwtService,
   ) {}
 
   async validateAccount(username: string, pass: string) {
@@ -18,12 +16,12 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
-    const {password, ...result} = existingAccount;
+    const { password, ...result } = existingAccount;
     return result;
   }
 
-  async login (user: any) {
-    const payload = { username: user.username, sub: user.id }
+  async login(user: any) {
+    const payload = { username: user.username, sub: user.id };
     return {
       access_token: this.jwtService.sign(payload),
     };

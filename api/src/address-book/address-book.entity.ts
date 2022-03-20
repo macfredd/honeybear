@@ -12,28 +12,28 @@ import { EntityType } from '../utils/enums';
 
 @Entity()
 export class AddressBook {
-
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({
     type: 'enum',
     enum: EntityType,
-    name: 'entity_type'
+    name: 'entity_type',
   })
   entityType: EntityType;
 
-  @ManyToOne(() => Address, (address) => address.addressBook, {nullable: false})
-  @JoinColumn({name: "address_id"})
+  @ManyToOne(() => Address, (address) => address.addressBook, {
+    nullable: false,
+  })
+  @JoinColumn({ name: 'address_id' })
   address: Address;
 
-  @Column({name: 'entity_id'})
+  @Column({ name: 'entity_id' })
   entityId: number;
 
-  @CreateDateColumn({name: "created_date"})
+  @CreateDateColumn({ name: 'created_date' })
   createdDate: Date;
 
-  @UpdateDateColumn({name: "updated_date"})
+  @UpdateDateColumn({ name: 'updated_date' })
   updatedDate: Date;
-
 }

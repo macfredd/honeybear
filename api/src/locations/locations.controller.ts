@@ -4,7 +4,6 @@ import { CreateLocationDto } from './dtos/create-location.dto';
 
 @Controller('locations')
 export class LocationsController {
-
   constructor(private locationsService: LocationsService) {}
 
   @Post()

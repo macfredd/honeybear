@@ -6,7 +6,9 @@ import { CreateDocumentTypeDto } from './dtos/create-document-type.dto';
 
 @Injectable()
 export class DocumentTypeService {
-  constructor(@InjectRepository(DocumentType) private repo: Repository<DocumentType>){}
+  constructor(
+    @InjectRepository(DocumentType) private repo: Repository<DocumentType>,
+  ) {}
 
   create(createDocumentTypeDto: CreateDocumentTypeDto) {
     const document_type = this.repo.create(createDocumentTypeDto);

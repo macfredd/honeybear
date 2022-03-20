@@ -3,11 +3,13 @@ import { DocumentType } from '../../document-type/document-type.entity';
 import { EntityType } from '../../utils/enums';
 
 export class CreateDocumentDto {
-
   @IsInt()
   documentType: DocumentType;
 
-  @IsEnum(EntityType, {message: "entityType must be on of: " + Object.values(EntityType).toString()})
+  @IsEnum(EntityType, {
+    message:
+      'entityType must be on of: ' + Object.values(EntityType).toString(),
+  })
   entityType: EntityType;
 
   @IsInt()
@@ -15,5 +17,4 @@ export class CreateDocumentDto {
 
   @IsUrl()
   url: string;
-
 }

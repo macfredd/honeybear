@@ -4,7 +4,6 @@ import { CreateAddressTypeDto } from './dtos/create-address-type.dto';
 
 @Controller('address-type')
 export class AddressTypeController {
-
   constructor(private addressTypeService: AddressTypeService) {}
 
   @Post()

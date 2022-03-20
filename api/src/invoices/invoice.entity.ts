@@ -3,7 +3,8 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
-  ManyToOne, OneToMany,
+  ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -13,18 +14,17 @@ import { InvoiceDetail } from '../invoice-detail/invoice-detail.entity';
 
 @Entity()
 export class Invoice {
-
   @PrimaryGeneratedColumn()
   id: number;
 
   @ManyToOne(() => Driver, (driver) => driver.invoices)
-  @JoinColumn({name: 'driver_id'})
+  @JoinColumn({ name: 'driver_id' })
   driver: Driver;
 
-  @Column({type: 'timestamp', nullable: true, name: 'payment_date'})
+  @Column({ type: 'timestamp', nullable: true, name: 'payment_date' })
   paymentDate: Date;
 
-  @Column({type: 'timestamp', nullable: true, name: 'void_date'})
+  @Column({ type: 'timestamp', nullable: true, name: 'void_date' })
   voidDate: Date;
 
   @Column({
@@ -34,13 +34,14 @@ export class Invoice {
   })
   status: InvoiceStatus;
 
-  @OneToMany(() => InvoiceDetail, (invoiceDetail) => invoiceDetail.invoice, {cascade: true})
+  @OneToMany(() => InvoiceDetail, (invoiceDetail) => invoiceDetail.invoice, {
+    cascade: true,
+  })
   invoiceDetail: InvoiceDetail[];
 
-  @CreateDateColumn({name: "created_date"})
+  @CreateDateColumn({ name: 'created_date' })
   createdDate: Date;
 
-  @UpdateDateColumn({name: "updated_date"})
+  @UpdateDateColumn({ name: 'updated_date' })
   updatedDate: Date;
-
 }

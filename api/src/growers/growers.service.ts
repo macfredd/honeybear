@@ -4,7 +4,6 @@ import { Repository } from 'typeorm';
 import { Grower } from './grower.entity';
 import { CreateGrowerDto } from './dtos/create-grower.dto';
 
-
 @Injectable()
 export class GrowersService {
   constructor(@InjectRepository(Grower) private repo: Repository<Grower>) {}

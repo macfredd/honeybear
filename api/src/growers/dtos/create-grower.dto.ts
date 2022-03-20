@@ -1,15 +1,22 @@
-import { IsDate, IsEmail, IsOptional, IsPhoneNumber, IsString, Length, MaxLength } from 'class-validator';
+import {
+  IsDate,
+  IsEmail,
+  IsOptional,
+  IsPhoneNumber,
+  IsString,
+  Length,
+  MaxLength,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class CreateGrowerDto {
-
   @IsString()
-  @Length(2,255)
+  @Length(2, 255)
   name: string;
 
   @IsOptional()
   @IsString()
-  @Length(2,255)
+  @Length(2, 255)
   tradeName: string;
 
   @IsString()
@@ -27,5 +34,4 @@ export class CreateGrowerDto {
   @IsPhoneNumber()
   @MaxLength(50)
   phone: string;
-
 }

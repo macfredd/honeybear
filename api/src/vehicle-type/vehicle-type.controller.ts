@@ -4,7 +4,6 @@ import { CreateVehicleTypeDto } from './dtos/create-vehicle-type.dto';
 
 @Controller('vehicle-type')
 export class VehicleTypeController {
-
   constructor(private vehicleTypeService: VehicleTypeService) {}
 
   @Post()

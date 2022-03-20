@@ -4,12 +4,14 @@ import { CreateInvoiceDto } from './dtos/create-invoice.dto';
 
 @Controller('invoices')
 export class InvoicesController {
-
   constructor(private invoicesService: InvoicesService) {}
 
   @Post()
   createInvoice(@Body() body: CreateInvoiceDto) {
-    const invoice = this.invoicesService.createDriverInvoice(body.driverId, body.jobId)
+    const invoice = this.invoicesService.createDriverInvoice(
+      body.driverId,
+      body.jobId,
+    );
     return invoice;
   }
 }

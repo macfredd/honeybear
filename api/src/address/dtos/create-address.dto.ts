@@ -1,8 +1,13 @@
-import { IsInt, IsOptional, IsString, Length, MaxLength } from 'class-validator';
+import {
+  IsInt,
+  IsOptional,
+  IsString,
+  Length,
+  MaxLength,
+} from 'class-validator';
 import { AddressType } from '../../address-type/address-type.entity';
 
 export class CreateAddressDto {
-
   @IsString()
   @MaxLength(255)
   streetLine1: string;
@@ -13,11 +18,11 @@ export class CreateAddressDto {
   streetLine2: string;
 
   @IsString()
-  @Length(2,100)
+  @Length(2, 100)
   city: string;
 
   @IsString()
-  @Length(2,100)
+  @Length(2, 100)
   state: string;
 
   @IsString()
@@ -25,10 +30,9 @@ export class CreateAddressDto {
   postalCode: string;
 
   @IsString()
-  @Length(2,75)
+  @Length(2, 75)
   country: string;
 
   @IsInt()
-  addressType: AddressType
-
+  addressType: AddressType;
 }

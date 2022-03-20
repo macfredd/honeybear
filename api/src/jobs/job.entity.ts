@@ -1,7 +1,8 @@
 import {
   Column,
   CreateDateColumn,
-  Entity, JoinColumn, JoinTable,
+  Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -16,33 +17,32 @@ import { Location } from '../locations/location.entity';
 
 @Entity()
 export class Job {
-
   @PrimaryGeneratedColumn()
   id: number;
 
   //Jobs are created by Growers, this is not nullable.
-  @ManyToOne(() => Grower, (grower) => grower.jobs,  {nullable: false})
-  @JoinColumn({name: 'grower_id'})
+  @ManyToOne(() => Grower, (grower) => grower.jobs, { nullable: false })
+  @JoinColumn({ name: 'grower_id' })
   grower: Grower;
 
   //Nullable, when the jobs is created, there is no driver yet.
   @ManyToOne(() => Driver, (driver) => driver.jobs)
-  @JoinColumn({name: 'driver_id'})
+  @JoinColumn({ name: 'driver_id' })
   driver: Driver;
 
-  @Column({length: 500, nullable: true})
+  @Column({ length: 500, nullable: true })
   description: string;
 
-  @Column({type: 'timestamp', nullable: true, name: 'published_date'})
+  @Column({ type: 'timestamp', nullable: true, name: 'published_date' })
   publishDate: Date;
 
-  @Column({type: 'timestamp', nullable: true, name: 'assigned_date'})
+  @Column({ type: 'timestamp', nullable: true, name: 'assigned_date' })
   assignedDate: Date;
 
-  @Column({type: 'timestamp', nullable: true, name: 'start_date'})
+  @Column({ type: 'timestamp', nullable: true, name: 'start_date' })
   startDate: Date;
 
-  @Column({type: 'timestamp', nullable: true, name: 'end_date'})
+  @Column({ type: 'timestamp', nullable: true, name: 'end_date' })
   endDate: Date;
 
   @Column({
@@ -52,20 +52,23 @@ export class Job {
   })
   status: JobStatus;
 
-  @OneToMany(() => JobDetail, (jobDetail) => jobDetail.job,{ cascade: true, eager:  true})
+  @OneToMany(() => JobDetail, (jobDetail) => jobDetail.job, {
+    cascade: true,
+    eager: true,
+  })
   jobDetail: JobDetail[];
 
-  @OneToMany(() => JobCandidate, (jobCandidate) => jobCandidate.job,{ cascade: true})
+  @OneToMany(() => JobCandidate, (jobCandidate) => jobCandidate.job, {
+    cascade: true,
+  })
   jobCandidate: JobCandidate[];
 
-  @OneToMany(() => Location, (location) => location.job,{ cascade: true})
+  @OneToMany(() => Location, (location) => location.job, { cascade: true })
   locations: Location[];
 
-  @CreateDateColumn({name: "created_date"})
+  @CreateDateColumn({ name: 'created_date' })
   createdDate: Date;
 
-  @UpdateDateColumn({name: "updated_date"})
+  @UpdateDateColumn({ name: 'updated_date' })
   updatedDate: Date;
-
-
 }

@@ -1,7 +1,8 @@
 import {
   Column,
   CreateDateColumn,
-  Entity, JoinColumn,
+  Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -13,35 +14,40 @@ import { AddressBook } from '../address-book/address-book.entity';
 import { JobDetail } from '../job-detail/job-detail.entity';
 
 @Entity()
-@Unique(
-  "unique_address_constraint",
-  ['streetLine1', 'streetLine2', 'city', 'state', 'postalCode', 'country']
-)
+@Unique('unique_address_constraint', [
+  'streetLine1',
+  'streetLine2',
+  'city',
+  'state',
+  'postalCode',
+  'country',
+])
 export class Address {
-
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({length: 255, name: "street_line_1" })
+  @Column({ length: 255, name: 'street_line_1' })
   streetLine1: string;
 
-  @Column({length: 255, nullable: true, name: "street_line_2"})
+  @Column({ length: 255, nullable: true, name: 'street_line_2' })
   streetLine2: string;
 
-  @Column({length:100})
+  @Column({ length: 100 })
   city: string;
 
-  @Column({length:100})
+  @Column({ length: 100 })
   state: string;
 
-  @Column({length:25, name: "postal_code"})
+  @Column({ length: 25, name: 'postal_code' })
   postalCode: string;
 
-  @Column({length:75})
+  @Column({ length: 75 })
   country: string;
 
-  @ManyToOne(() => AddressType, (addressType) => addressType.addresses, { nullable: false })
-  @JoinColumn({name: "address_type_id"})
+  @ManyToOne(() => AddressType, (addressType) => addressType.addresses, {
+    nullable: false,
+  })
+  @JoinColumn({ name: 'address_type_id' })
   addressType: AddressType;
 
   @OneToMany(() => AddressBook, (addressBook) => addressBook.address)
@@ -50,10 +56,9 @@ export class Address {
   @OneToMany(() => JobDetail, (jobDetail) => jobDetail.deliveryAddress)
   jobDetails: JobDetail[];
 
-  @CreateDateColumn({name: "created_date"})
+  @CreateDateColumn({ name: 'created_date' })
   createdDate: Date;
 
-  @UpdateDateColumn({name: "updated_date"})
+  @UpdateDateColumn({ name: 'updated_date' })
   updatedDate: Date;
-
 }

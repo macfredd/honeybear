@@ -6,7 +6,7 @@ import { CreateDocumentDto } from './dtos/create-document.dto';
 
 @Injectable()
 export class DocumentsService {
-  constructor(@InjectRepository(Document) private repo:Repository<Document>){}
+  constructor(@InjectRepository(Document) private repo: Repository<Document>) {}
 
   create(createDocumentDto: CreateDocumentDto) {
     const document = this.repo.create(createDocumentDto);

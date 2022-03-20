@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm'
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { AddressModule } from './address/address.module';
 import { GrowersModule } from './growers/growers.module';
 import { DriversModule } from './drivers/drivers.module';
@@ -39,7 +39,7 @@ import { AuthModule } from './auth/auth.module';
     InvoicesModule,
     InvoiceDetailModule,
     AccountsModule,
-    AuthModule
+    AuthModule,
   ],
   controllers: [],
   providers: [],

@@ -4,12 +4,11 @@ import { CreateConsumerDto } from './dtos/create-consumer.dto';
 
 @Controller('consumers')
 export class ConsumersController {
-
   constructor(private consumersService: ConsumersService) {}
 
   @Post()
   createConsumer(@Body() body: CreateConsumerDto) {
-    const consumer = this.consumersService.create(body)
+    const consumer = this.consumersService.create(body);
     return consumer;
   }
 }

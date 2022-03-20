@@ -4,7 +4,6 @@ import { Vehicle } from '../../vehicles/vehicle.entity';
 import { Driver } from '../../drivers/driver.entity';
 
 export class CreateLocationDto {
-
   @IsInt()
   job: Job;
 
@@ -19,5 +18,4 @@ export class CreateLocationDto {
 
   @IsLongitude()
   longitude: number;
-
 }

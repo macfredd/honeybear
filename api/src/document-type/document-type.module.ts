@@ -7,6 +7,6 @@ import { DocumentType } from './document-type.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([DocumentType])],
   controllers: [DocumentTypeController],
-  providers: [DocumentTypeService]
+  providers: [DocumentTypeService],
 })
 export class DocumentTypeModule {}

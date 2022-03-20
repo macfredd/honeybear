@@ -1,7 +1,6 @@
 import { IsInt } from 'class-validator';
 
 export class SelectJobCandidateDto {
-
   @IsInt()
   jobId: number;
 
@@ -10,5 +9,4 @@ export class SelectJobCandidateDto {
 
   @IsInt()
   vehicleId: number;
-
 }

@@ -1,9 +1,9 @@
-const dbConfig  = {
+const dbConfig = {
   synchronize: true,
   migrations: ['migrations/*.js'],
   cli: {
     migrationsDir: 'migrations',
-  }
+  },
 };
 
 Object.assign(dbConfig, {
@@ -15,7 +15,7 @@ Object.assign(dbConfig, {
   password: 'honeybear',
   url: process.env.DATABASE_URL,
   entities: ['**/*.entity.js'],
-  migrationsRun: true
-})
+  migrationsRun: true,
+});
 
 module.exports = dbConfig;

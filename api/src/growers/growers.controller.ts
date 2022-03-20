@@ -4,7 +4,6 @@ import { CreateGrowerDto } from './dtos/create-grower.dto';
 
 @Controller('growers')
 export class GrowersController {
-
   constructor(private growersService: GrowersService) {}
 
   @Post()

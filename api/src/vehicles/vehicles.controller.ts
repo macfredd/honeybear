@@ -4,7 +4,6 @@ import { CreateVehicleDto } from './dtos/create-vehicle.dto';
 
 @Controller('vehicles')
 export class VehiclesController {
-
   constructor(private vehiclesService: VehiclesService) {}
 
   @Post()

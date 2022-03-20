@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { randomBytes, scrypt as _scrypt } from 'crypto';
 import { promisify } from 'util';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -10,14 +14,13 @@ const scrypt = promisify(_scrypt);
 
 @Injectable()
 export class AccountsService {
-
-  constructor(@InjectRepository(Account) private repo:Repository<Account>) {}
+  constructor(@InjectRepository(Account) private repo: Repository<Account>) {}
 
   async signUp(createAccountDto: CreateAccountDto) {
-
-    const existingAccount = await this.repo.findOne( {email: createAccountDto.email})
-    if (existingAccount)
-      throw new BadRequestException("Email already exists!");
+    const existingAccount = await this.repo.findOne({
+      email: createAccountDto.email,
+    });
+    if (existingAccount) throw new BadRequestException('Email already exists!');
 
     // Generate the Salt
     const salt = randomBytes(8).toString('hex');
@@ -33,8 +36,7 @@ export class AccountsService {
   }
 
   async singIn(email: string, password: string) {
-
-    const existingAccount = await this.repo.findOne({email});
+    const existingAccount = await this.repo.findOne({ email });
     if (!existingAccount)
       throw new BadRequestException("User doesn't not exists!");
 
@@ -45,7 +47,7 @@ export class AccountsService {
 
     // Is a valid password
     if (storedHash !== hash.toString('hex')) {
-      throw  new UnauthorizedException('Wrong Password')
+      throw new UnauthorizedException('Wrong Password');
     }
     return existingAccount;
   }

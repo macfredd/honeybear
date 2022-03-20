@@ -5,7 +5,6 @@ import { SelectJobCandidateDto } from './dtos/select-job-candidate.dto';
 
 @Controller('job-candidate')
 export class JobCandidateController {
-
   constructor(private jobCandidateService: JobCandidateService) {}
 
   @Post()
@@ -16,8 +15,7 @@ export class JobCandidateController {
 
   @Post('assign')
   assignCandidate(@Body() body: SelectJobCandidateDto) {
-    const assignCandidate =
-      this.jobCandidateService.assignCandidate(body)
+    const assignCandidate = this.jobCandidateService.assignCandidate(body);
 
     return assignCandidate;
   }

@@ -4,7 +4,6 @@ import { Driver } from '../../drivers/driver.entity';
 import { Vehicle } from '../../vehicles/vehicle.entity';
 
 export class CreateJobCandidateDto {
-
   @IsInt()
   job: Job;
 
@@ -13,5 +12,4 @@ export class CreateJobCandidateDto {
 
   @IsInt()
   vehicle: Vehicle;
-
 }

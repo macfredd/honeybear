@@ -10,16 +10,20 @@ import { JobDetailService } from '../job-detail/job-detail.service';
 
 @Injectable()
 export class InvoicesService {
-
-  constructor(@InjectRepository(Invoice) private repo:Repository<Invoice>,
-              private driverService: DriversService,
-              private jobsService: JobsService,
-              private jobDetailService: JobDetailService) {}
+  constructor(
+    @InjectRepository(Invoice) private repo: Repository<Invoice>,
+    private driverService: DriversService,
+    private jobsService: JobsService,
+    private jobDetailService: JobDetailService,
+  ) {}
 
   async createDriverInvoice(driverId: number, jobId: number) {
-    const forBilling = await this.jobsService.getDriverDetailForBilling(jobId, driverId);
+    const forBilling = await this.jobsService.getDriverDetailForBilling(
+      jobId,
+      driverId,
+    );
     if (!forBilling.length)
-      throw new BadRequestException("No billable items were found")
+      throw new BadRequestException('No billable items were found');
 
     console.log(forBilling);
 
@@ -30,10 +34,12 @@ export class InvoicesService {
     invoice.status = InvoiceStatus.PENDING;
     invoice.invoiceDetail = [];
 
-    for(let detail of forBilling) {
-      let invoiceDetail = new InvoiceDetail();
+    for (const detail of forBilling) {
+      const invoiceDetail = new InvoiceDetail();
 
-      let jobDetail = await this.jobDetailService.findOne(detail['jobDetail_id']);
+      const jobDetail = await this.jobDetailService.findOne(
+        detail['jobDetail_id'],
+      );
       invoiceDetail.jobDetail = jobDetail;
 
       invoiceDetail.deliveryAmount = detail['jobDetail_delivery_amount'];
