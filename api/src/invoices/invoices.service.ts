@@ -25,9 +25,7 @@ export class InvoicesService {
     if (!forBilling.length)
       throw new BadRequestException('No billable items were found');
 
-    console.log(forBilling);
-
-    const driver = await this.driverService.findOne(driverId);
+    const driver = await this.driverService.getDriverById(driverId);
 
     const invoice = new Invoice();
     invoice.driver = driver;
@@ -42,17 +40,34 @@ export class InvoicesService {
       );
       invoiceDetail.jobDetail = jobDetail;
 
+      invoiceDetail.packageAmount = detail['jobDetail_package_amount'];
       invoiceDetail.deliveryAmount = detail['jobDetail_delivery_amount'];
-      invoiceDetail.totalAmount = detail['jobDetail_delivery_amount'];
+      invoiceDetail.taxAmount = detail['jobDetail_tax_amount'];
+      invoiceDetail.totalAmount = detail['jobDetail_total_amount'];
       invoice.invoiceDetail.push(invoiceDetail);
     }
 
-    const newInvoce = await this.repo.create(invoice);
-    const bill = this.repo.save(newInvoce);
+    const newInvoice = await this.repo.create(invoice);
+    const bill = this.repo.save(newInvoice);
 
     //Update jobDetailStatus
     await this.jobDetailService.changeStatusToBilled(jobId);
 
     return bill;
+  }
+
+  getInvoiceById(invoiceId: number) {
+    return this.repo.findOne(invoiceId);
+  }
+
+  async getInvoiceByDriverId(driverId: number) {
+    return this.repo.find({
+      relations: ['driver'],
+      where: {
+        driver: {
+          id: driverId,
+        },
+      },
+    });
   }
 }

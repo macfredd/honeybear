@@ -6,10 +6,16 @@ import { CreateJobDto } from './dtos/create-job.dto';
 import { JobDetail } from '../job-detail/job-detail.entity';
 import { JobStatus, JobDetailStatus } from '../utils/enums';
 import { Driver } from '../drivers/driver.entity';
+import { GrowersService } from '../growers/growers.service';
+import { DriversService } from '../drivers/drivers.service';
 
 @Injectable()
 export class JobsService {
-  constructor(@InjectRepository(Job) private repo: Repository<Job>) {}
+  constructor(
+    @InjectRepository(Job) private repo: Repository<Job>,
+    private growerService: GrowersService,
+    private driverService: DriversService,
+  ) {}
 
   async create(createJobDto: CreateJobDto) {
     const job = this.repo.create(createJobDto);
@@ -20,7 +26,7 @@ export class JobsService {
         detail.packageAmount + detail.deliveryAmount + detail.taxAmount;
 
       if ('deliveryAddress' in detail) {
-        //const address = await this.addressBookService.findBy .findOne(detail.deliveryAddress)
+        //const address = await this.addressBookService.findBy .getDriverById(detail.deliveryAddress)
         //detail.deliveryAddress = detail.deliveryAddress;
       }
     });
@@ -28,7 +34,7 @@ export class JobsService {
     return this.repo.save(job);
   }
 
-  findOne(jobId: number) {
+  getJobById(jobId: number) {
     return this.repo.findOne(jobId);
   }
 
@@ -67,7 +73,7 @@ export class JobsService {
       );
 
     //TODO: Validate that only the assigned driver or an admin role can start a job.
-    job.status = JobStatus.IN_PROGRESS;
+    job.status = JobStatus.INPROGRESS;
     job.startDate = new Date();
 
     return await this.repo.save(job);
@@ -78,7 +84,7 @@ export class JobsService {
 
     if (job == undefined) throw new BadRequestException('Job does not exists!');
 
-    if (job.status != JobStatus.IN_PROGRESS)
+    if (job.status != JobStatus.INPROGRESS)
       throw new BadRequestException(
         'Incorrect Job Status: [' + job.status + '], Expected [in progress]',
       );
@@ -104,5 +110,51 @@ export class JobsService {
         paymentStatus: JobDetailStatus.COLLECT,
       })
       .getRawMany();
+  }
+
+  async getJobByGrowerId(growerId: number) {
+    return this.repo.find({
+      relations: ['grower'],
+      where: {
+        grower: {
+          id: growerId,
+        },
+      },
+    });
+  }
+
+  async getJobByGrowerIdAndStatus(growerId: number, status: JobStatus) {
+    return this.repo.find({
+      relations: ['grower'],
+      where: {
+        grower: {
+          id: growerId,
+        },
+        status: status,
+      },
+    });
+  }
+
+  async getJobByDriverId(driveId: number) {
+    return this.repo.find({
+      relations: ['driver'],
+      where: {
+        driver: {
+          id: driveId,
+        },
+      },
+    });
+  }
+
+  async getJobByDriverIdAndStatus(driverId: number, status: JobStatus) {
+    return this.repo.find({
+      relations: ['driver'],
+      where: {
+        driver: {
+          id: driverId,
+        },
+        status: status,
+      },
+    });
   }
 }

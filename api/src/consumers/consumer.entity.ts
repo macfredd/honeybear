@@ -42,4 +42,8 @@ export class Consumer {
 
   @UpdateDateColumn({ name: 'updated_date' })
   updatedDate: Date;
+
+  private get fullName(): string {
+    return `${this.firstName} ${this.lastName} ${this.surname}`;
+  }
 }

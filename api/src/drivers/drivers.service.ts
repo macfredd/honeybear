@@ -13,7 +13,7 @@ export class DriversService {
     return this.repo.save(driver);
   }
 
-  findOne(driver_id: number) {
-    return this.repo.findOne(driver_id);
+  getDriverById(driverId: number) {
+    return this.repo.findOne(driverId);
   }
 }

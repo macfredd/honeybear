@@ -17,7 +17,9 @@ export class Invoice {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Driver, (driver) => driver.invoices)
+  @ManyToOne(() => Driver, (driver) => driver.invoices, {
+    eager: true,
+  })
   @JoinColumn({ name: 'driver_id' })
   driver: Driver;
 
@@ -36,6 +38,7 @@ export class Invoice {
 
   @OneToMany(() => InvoiceDetail, (invoiceDetail) => invoiceDetail.invoice, {
     cascade: true,
+    eager: true,
   })
   invoiceDetail: InvoiceDetail[];
 
@@ -44,4 +47,32 @@ export class Invoice {
 
   @UpdateDateColumn({ name: 'updated_date' })
   updatedDate: Date;
+
+  private get totalPackageAmount(): number {
+    return this.invoiceDetail.reduce(
+      (total, detail) => total + detail.packageAmount,
+      0,
+    );
+  }
+
+  private get totalDeliveryAmount(): number {
+    return this.invoiceDetail.reduce(
+      (total, detail) => total + detail.deliveryAmount,
+      0,
+    );
+  }
+
+  private get totalTaxAmount(): number {
+    return this.invoiceDetail.reduce(
+      (total, detail) => total + detail.taxAmount,
+      0,
+    );
+  }
+
+  private get grandTotalAmount(): number {
+    return this.invoiceDetail.reduce(
+      (total, detail) => total + detail.totalAmount,
+      0,
+    );
+  }
 }

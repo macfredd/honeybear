@@ -14,4 +14,8 @@ export class VehicleTypeService {
     const type = this.repo.create(createVehicleTypeDto);
     return this.repo.save(type);
   }
+
+  getVehicleTypes() {
+    return this.repo.find();
+  }
 }

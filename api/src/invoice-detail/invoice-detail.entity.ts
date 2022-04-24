@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { Invoice } from '../invoices/invoice.entity';
 import { JobDetail } from '../job-detail/job-detail.entity';
+import { ColumnNumericTransformer } from '../transformers/column-numeric-transformer';
 
 @Entity()
 export class InvoiceDetail {
@@ -20,7 +21,9 @@ export class InvoiceDetail {
   @JoinColumn({ name: 'invoice_id' })
   invoice: Invoice;
 
-  @OneToOne(() => JobDetail, (jobDetail) => jobDetail.invoiceDetail)
+  @OneToOne(() => JobDetail, (jobDetail) => jobDetail.invoiceDetail, {
+    eager: true,
+  })
   @JoinColumn({ name: 'job_detail_id' })
   jobDetail: JobDetail;
 
@@ -30,6 +33,7 @@ export class InvoiceDetail {
     precision: 5,
     scale: 2,
     nullable: true,
+    transformer: new ColumnNumericTransformer(),
   })
   packageAmount: number;
 
@@ -39,6 +43,7 @@ export class InvoiceDetail {
     precision: 5,
     scale: 2,
     nullable: true,
+    transformer: new ColumnNumericTransformer(),
   })
   deliveryAmount: number;
 
@@ -48,10 +53,17 @@ export class InvoiceDetail {
     precision: 5,
     scale: 2,
     nullable: true,
+    transformer: new ColumnNumericTransformer(),
   })
   taxAmount: number;
 
-  @Column({ type: 'decimal', name: 'total_amount', precision: 5, scale: 2 })
+  @Column({
+    type: 'decimal',
+    name: 'total_amount',
+    precision: 5,
+    scale: 2,
+    transformer: new ColumnNumericTransformer(),
+  })
   totalAmount: number;
 
   @CreateDateColumn({ name: 'created_date' })

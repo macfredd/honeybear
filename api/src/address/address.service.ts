@@ -12,4 +12,8 @@ export class AddressService {
     const address = this.repo.create(addressDto);
     return this.repo.save(address);
   }
+
+  getAddressById(id: number) {
+    return this.repo.findOne(id);
+  }
 }

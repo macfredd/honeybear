@@ -6,5 +6,5 @@ export class CreateDocumentTypeDto {
   name: string;
 
   @IsBoolean()
-  requiredAuth: boolean;
+  requiredValidation: boolean;
 }

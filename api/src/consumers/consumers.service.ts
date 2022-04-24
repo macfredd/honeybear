@@ -12,4 +12,8 @@ export class ConsumersService {
     const consumer = this.repo.create(createConsumerDto);
     return this.repo.save(consumer);
   }
+
+  getConsumerById(id: number) {
+    return this.repo.findOne(id);
+  }
 }

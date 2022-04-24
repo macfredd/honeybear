@@ -24,6 +24,7 @@ export class AddressBook {
 
   @ManyToOne(() => Address, (address) => address.addressBook, {
     nullable: false,
+    eager: true,
   })
   @JoinColumn({ name: 'address_id' })
   address: Address;

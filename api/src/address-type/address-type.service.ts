@@ -14,4 +14,8 @@ export class AddressTypeService {
     const type = this.repo.create(createAddressTypeDto);
     return this.repo.save(type);
   }
+
+  getAllAddressType() {
+    return this.repo.find();
+  }
 }

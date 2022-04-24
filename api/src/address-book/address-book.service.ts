@@ -14,4 +14,8 @@ export class AddressBookService {
     const addressBook = this.repo.create(createAddressBookDto);
     return this.repo.save(addressBook);
   }
+
+  getAddressBookByEntityId(id: number) {
+    return this.repo.find({ entityId: id });
+  }
 }

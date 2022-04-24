@@ -12,4 +12,16 @@ export class LocationsService {
     const location = this.repo.create(locationDto);
     return this.repo.save(location);
   }
+
+  async getLocationByVehicleId(vehicleId: number) {
+    return this.repo.find({
+      relations: ['vehicle'],
+      where: {
+        vehicle: {
+          id: vehicleId,
+        },
+      },
+      order: { createdDate: 'ASC' },
+    });
+  }
 }

@@ -14,4 +14,8 @@ export class DocumentTypeService {
     const document_type = this.repo.create(createDocumentTypeDto);
     return this.repo.save(document_type);
   }
+
+  getAllDocumentTypes() {
+    return this.repo.find();
+  }
 }

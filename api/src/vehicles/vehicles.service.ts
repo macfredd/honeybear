@@ -12,4 +12,19 @@ export class VehiclesService {
     const vehicle = this.repo.create(createVehicleDto);
     return this.repo.save(vehicle);
   }
+
+  getVehicleById(id: number) {
+    return this.repo.findOne(id);
+  }
+
+  getVehicleByDriverId(driverId: number) {
+    return this.repo.find({
+      relations: ['driver'],
+      where: {
+        driver: {
+          id: driverId,
+        },
+      },
+    });
+  }
 }

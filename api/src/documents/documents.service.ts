@@ -12,4 +12,14 @@ export class DocumentsService {
     const document = this.repo.create(createDocumentDto);
     return this.repo.save(document);
   }
+
+  getDocumentById(id: number) {
+    return this.repo.findOne(id);
+  }
+
+  getDocumentByOwnerId(id: number) {
+    return this.repo.find({
+      ownerId: id,
+    });
+  }
 }

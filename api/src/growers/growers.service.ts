@@ -12,4 +12,8 @@ export class GrowersService {
     const grower = this.repo.create(createGrowerDto);
     return this.repo.save(grower);
   }
+
+  getGrowerById(growerId: number) {
+    return this.repo.findOne(growerId);
+  }
 }

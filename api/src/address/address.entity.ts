@@ -46,6 +46,7 @@ export class Address {
 
   @ManyToOne(() => AddressType, (addressType) => addressType.addresses, {
     nullable: false,
+    eager: true,
   })
   @JoinColumn({ name: 'address_type_id' })
   addressType: AddressType;

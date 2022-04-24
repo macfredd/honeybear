@@ -11,6 +11,7 @@ import { Consumer } from '../consumers/consumer.entity';
 import { JobDetailStatus } from '../utils/enums';
 import { Address } from '../address/address.entity';
 import { InvoiceDetail } from '../invoice-detail/invoice-detail.entity';
+import { ColumnNumericTransformer } from '../transformers/column-numeric-transformer';
 
 @Entity()
 export class JobDetail {
@@ -28,16 +29,40 @@ export class JobDetail {
   @JoinColumn({ name: 'consumer_id' })
   consumer: Consumer;
 
-  @Column({ type: 'decimal', name: 'package_amount', precision: 5, scale: 2 })
+  @Column({
+    type: 'decimal',
+    name: 'package_amount',
+    precision: 5,
+    scale: 2,
+    transformer: new ColumnNumericTransformer(),
+  })
   packageAmount: number;
 
-  @Column({ type: 'decimal', name: 'delivery_amount', precision: 5, scale: 2 })
+  @Column({
+    type: 'decimal',
+    name: 'delivery_amount',
+    precision: 5,
+    scale: 2,
+    transformer: new ColumnNumericTransformer(),
+  })
   deliveryAmount: number;
 
-  @Column({ type: 'decimal', name: 'tax_amount', precision: 5, scale: 2 })
+  @Column({
+    type: 'decimal',
+    name: 'tax_amount',
+    precision: 5,
+    scale: 2,
+    transformer: new ColumnNumericTransformer(),
+  })
   taxAmount: number;
 
-  @Column({ type: 'decimal', name: 'total_amount', precision: 5, scale: 2 })
+  @Column({
+    type: 'decimal',
+    name: 'total_amount',
+    precision: 5,
+    scale: 2,
+    transformer: new ColumnNumericTransformer(),
+  })
   totalAmount: number;
 
   @Column({

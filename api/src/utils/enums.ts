@@ -15,7 +15,7 @@ export enum JobStatus {
   CREATED = 'created',
   PUBLISHED = 'published',
   ASSIGNED = 'assigned',
-  IN_PROGRESS = 'in progress',
+  INPROGRESS = 'inprogress',
   COMPLETED = 'completed',
   CANCELED = 'canceled',
 }

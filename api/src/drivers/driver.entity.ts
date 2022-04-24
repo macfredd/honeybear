@@ -11,6 +11,7 @@ import { Job } from '../jobs/job.entity';
 import { JobCandidate } from '../job-candidate/job-candidate.entity';
 import { Location } from '../locations/location.entity';
 import { Invoice } from '../invoices/invoice.entity';
+import { calculateAge } from '../utils/functions';
 
 @Entity()
 export class Driver {
@@ -51,7 +52,7 @@ export class Driver {
   @Column({ nullable: true, name: 'account_id' })
   accountId: number;
 
-  @OneToMany(() => Vehicle, (vehicle) => vehicle.driver)
+  @OneToMany(() => Vehicle, (vehicle) => vehicle.driver, { eager: true })
   vehicles: Vehicle[];
 
   @OneToMany(() => Job, (job) => job.driver)
@@ -71,4 +72,15 @@ export class Driver {
 
   @UpdateDateColumn({ name: 'updated_date' })
   updatedDate: Date;
+
+  private get fullName(): string {
+    return `${this.firstName} ${this.lastName} ${this.surname}`;
+  }
+
+  /**
+   * Calculate the Driver Age.
+   */
+  private get age(): number {
+    return calculateAge(this.birthDate);
+  }
 }

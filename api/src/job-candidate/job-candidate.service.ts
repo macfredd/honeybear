@@ -63,4 +63,26 @@ export class JobCandidateService {
       );
     }
   }
+
+  async getJobCandidatesByJobId(jobId: number) {
+    return this.repo.find({
+      relations: ['job'],
+      where: {
+        job: {
+          id: jobId,
+        },
+      },
+    });
+  }
+
+  async getJobCandidatesByDriverId(driverId: number) {
+    return this.repo.find({
+      relations: ['driver'],
+      where: {
+        driver: {
+          id: driverId,
+        },
+      },
+    });
+  }
 }

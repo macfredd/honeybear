@@ -34,6 +34,7 @@ export class JobCandidate {
 
   @ManyToOne(() => Vehicle, (vehicle) => vehicle.jobCandidate, {
     nullable: false,
+    eager: true,
   })
   @JoinColumn({ name: 'vehicle_id' })
   vehicle: Vehicle;
