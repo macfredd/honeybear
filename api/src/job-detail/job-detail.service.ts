@@ -11,7 +11,7 @@ export class JobDetailService {
   ) {}
 
   async findOne(jobDetailId: number) {
-    return await this.repo.findOne(jobDetailId);
+    return await this.repo.findOneBy({ id: jobDetailId });
   }
 
   async changeStatusToBilled(jobId: number) {

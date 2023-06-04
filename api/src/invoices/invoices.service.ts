@@ -57,7 +57,7 @@ export class InvoicesService {
   }
 
   getInvoiceById(invoiceId: number) {
-    return this.repo.findOne(invoiceId);
+    return this.repo.findOneBy({ id: invoiceId });
   }
 
   async getInvoiceByDriverId(driverId: number) {

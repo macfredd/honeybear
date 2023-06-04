@@ -16,6 +16,6 @@ export class AddressBookService {
   }
 
   getAddressBookByEntityId(id: number) {
-    return this.repo.find({ entityId: id });
+    return this.repo.find({ where: { entityId: id } });
   }
 }

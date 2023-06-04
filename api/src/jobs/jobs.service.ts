@@ -35,11 +35,11 @@ export class JobsService {
   }
 
   getJobById(jobId: number) {
-    return this.repo.findOne(jobId);
+    return this.repo.findOneBy({ id: jobId });
   }
 
   async publishJob(jobId: number) {
-    const job = await this.repo.findOne(jobId);
+    const job = await this.repo.findOneBy({ id: jobId });
 
     if (job == undefined) throw new BadRequestException('Job does not exists!');
 
@@ -63,7 +63,7 @@ export class JobsService {
   }
 
   async startJob(jobId: number) {
-    const job = await this.repo.findOne(jobId);
+    const job = await this.repo.findOneBy({ id: jobId });
 
     if (job == undefined) throw new BadRequestException('Job does not exists!');
 
@@ -80,7 +80,7 @@ export class JobsService {
   }
 
   async completeJob(jobId: number) {
-    const job = await this.repo.findOne(jobId);
+    const job = await this.repo.findOneBy({ id: jobId });
 
     if (job == undefined) throw new BadRequestException('Job does not exists!');
 

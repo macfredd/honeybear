@@ -14,11 +14,11 @@ export class DocumentsService {
   }
 
   getDocumentById(id: number) {
-    return this.repo.findOne(id);
+    return this.repo.findOneBy({ id });
   }
 
   getDocumentByOwnerId(id: number) {
-    return this.repo.find({
+    return this.repo.findBy({
       ownerId: id,
     });
   }

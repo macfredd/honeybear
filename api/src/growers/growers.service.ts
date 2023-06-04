@@ -14,6 +14,6 @@ export class GrowersService {
   }
 
   getGrowerById(growerId: number) {
-    return this.repo.findOne(growerId);
+    return this.repo.findOneBy({ id: growerId });
   }
 }

@@ -26,9 +26,9 @@ export class JobCandidateService {
   async assignCandidate(selectJobCandidate: SelectJobCandidateDto) {
     const jobCandidate = await this.repo.findOne({
       where: {
-        job: selectJobCandidate.jobId,
-        driver: selectJobCandidate.driverId,
-        vehicle: selectJobCandidate.vehicleId,
+        job: { id: selectJobCandidate.jobId },
+        driver: { id: selectJobCandidate.driverId },
+        vehicle: { id: selectJobCandidate.vehicleId },
       },
     });
 

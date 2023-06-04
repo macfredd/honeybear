@@ -17,7 +17,7 @@ export class AccountsService {
   constructor(@InjectRepository(Account) private repo: Repository<Account>) {}
 
   async signUp(createAccountDto: CreateAccountDto) {
-    const existingAccount = await this.repo.findOne({
+    const existingAccount = await this.repo.findOneBy({
       email: createAccountDto.email,
     });
     if (existingAccount) throw new BadRequestException('Email already exists!');
@@ -36,7 +36,7 @@ export class AccountsService {
   }
 
   async singIn(email: string, password: string) {
-    const existingAccount = await this.repo.findOne({ email });
+    const existingAccount = await this.repo.findOneBy({ email });
     if (!existingAccount)
       throw new BadRequestException("User doesn't not exists!");
 

@@ -14,6 +14,6 @@ export class DriversService {
   }
 
   getDriverById(driverId: number) {
-    return this.repo.findOne(driverId);
+    return this.repo.findOneBy({ id: driverId });
   }
 }

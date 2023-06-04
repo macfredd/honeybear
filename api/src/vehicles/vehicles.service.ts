@@ -14,7 +14,7 @@ export class VehiclesService {
   }
 
   getVehicleById(id: number) {
-    return this.repo.findOne(id);
+    return this.repo.findOneBy({id});
   }
 
   getVehicleByDriverId(driverId: number) {

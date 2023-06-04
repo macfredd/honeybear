@@ -18,10 +18,11 @@ import { InvoicesModule } from './invoices/invoices.module';
 import { InvoiceDetailModule } from './invoice-detail/invoice-detail.module';
 import { AccountsModule } from './accounts/accounts.module';
 import { AuthModule } from './auth/auth.module';
+import settings = require('../ormconfig.js');
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(),
+    TypeOrmModule.forRoot(settings),
     AddressModule,
     GrowersModule,
     DriversModule,

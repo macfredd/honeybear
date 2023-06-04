@@ -14,6 +14,6 @@ export class AddressService {
   }
 
   getAddressById(id: number) {
-    return this.repo.findOne(id);
+    return this.repo.findOneBy({ id });
   }
 }
